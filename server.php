@@ -17,11 +17,37 @@ if ($conn->connect_error) {
 // Get the expression sent from the form
 $expression = isset($_POST['infix-input']) ? $_POST['infix-input'] : '';
 
-// Calculate the result using the RPN calculator class
-$postfix = infixToPostfix($expression);
-echo "Postfix expression: $postfix";
+$exp_type = isset($_POST['exp-type']) ? $_POST['exp-type'] : '';
 
-$prefix = infixToPrefix($expression);
-echo "Prefix expression: $prefix";
+if ($exp_type == "RPN") {
+    $postfix = infixToPostfix($expression);
+    echo "Postfix expression: $postfix<br>";
+
+    $posfixInsertion = <<<sql
+    INSERT INTO Postfix (exp, postfix) VALUES ("$expression", "$postfix");
+    sql;
+
+    if ($conn->query($posfixInsertion) == TRUE) {
+        echo "Data added bkl check karle<br>";
+    } else {
+        echo "Data not added bkl check karle<br>";
+    }
+} else if ($exp_type == "PN") {
+    $prefix = infixToPrefix($expression);
+    echo "Prefix expression: $prefix<br>";
+
+    $prefixInsertion = <<<sql
+    INSERT INTO Prefix (exp, prefix) VALUES ("$expression", "$prefix");
+    sql;
+
+    if ($conn->query($prefixInsertion) == TRUE) {
+        echo "Data added bkl check karle<br>";
+    } else {
+        echo "Data not added bkl check karle<br>";
+    }
+} else {
+    echo "TUM DEKHO BHAI APNA<br>";
+    exit(0);
+}
 
 $conn->close();

@@ -10,9 +10,16 @@
       <div className="form">
         <form action="server.php" method="post">
           <h2>RPN Converter</h2>
+          <select value="RPN" name="exp-type" required>
+            <option name="RPN">RPN</option>
+            <option name="PN">PN</option>
+          </select>
           <label for="infix-input">Input your expression:</label>
           <input required id="infix-input" type="text" name="infix-input" />
           <button type="submit">Submit</button>
+        </form>
+        <form action="history.php" method="post">
+          <button type="submit">history</button>
         </form>
       </div>
     </div>
