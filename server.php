@@ -1,5 +1,6 @@
 <?php
 include("rpn.php");
+include("pn.php");
 
 $servername = "localhost";
 $username = "root";
@@ -23,11 +24,11 @@ if ($exp_type == "RPN") {
     $postfix = infixToPostfix($expression);
     echo "Postfix expression: $postfix<br>";
 
-    $posfixInsertion = <<<sql
+    $postfixInsertion = <<<sql
     INSERT INTO Postfix (exp, postfix) VALUES ("$expression", "$postfix");
     sql;
 
-    if ($conn->query($posfixInsertion) == TRUE) {
+    if ($conn->query($postfixInsertion) == TRUE) {
         echo "Data added bkl check karle<br>";
     } else {
         echo "Data not added bkl check karle<br>";
