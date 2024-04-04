@@ -50,12 +50,3 @@ function infixToPostfix($infix)
 
     return $postfix;
 }
-
-/*
-class RPN {
-    public static $pattern;
-
-    public static function Calculate($pattern){
-        return "Pattern: $pattern";
-    }
-*/

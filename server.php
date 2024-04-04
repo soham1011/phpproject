@@ -1,19 +1,5 @@
 <?php
-include("rpn.php");
-include("pn.php");
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "php";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Could not connect succesfully: " . $conn->connect_error);
-} else {
-    echo "connected succesfully<br>";
-}
+include("connection.php");
 
 // Get the expression sent from the form
 $expression = isset($_POST['infix-input']) ? $_POST['infix-input'] : '';
@@ -21,6 +7,8 @@ $expression = isset($_POST['infix-input']) ? $_POST['infix-input'] : '';
 $exp_type = isset($_POST['exp-type']) ? $_POST['exp-type'] : '';
 
 if ($exp_type == "RPN") {
+    include("rpn.php");
+
     $postfix = infixToPostfix($expression);
     echo "Postfix expression: $postfix<br>";
 
@@ -29,11 +17,13 @@ if ($exp_type == "RPN") {
     sql;
 
     if ($conn->query($postfixInsertion) == TRUE) {
-        echo "Data added bkl check karle<br>";
+        echo "Data added to the database<br>";
     } else {
-        echo "Data not added bkl check karle<br>";
+        echo "Data not added to the database<br>";
     }
 } else if ($exp_type == "PN") {
+    include("pn.php");
+
     $prefix = infixToPrefix($expression);
     echo "Prefix expression: $prefix<br>";
 
@@ -42,12 +32,12 @@ if ($exp_type == "RPN") {
     sql;
 
     if ($conn->query($prefixInsertion) == TRUE) {
-        echo "Data added bkl check karle<br>";
+        echo "Data added to the database<br>";
     } else {
-        echo "Data not added bkl check karle<br>";
+        echo "Data not added to the database<br>";
     }
 } else {
-    echo "TUM DEKHO BHAI APNA<br>";
+    echo __LINE__ . " [ERROR] Unhandled expression type: $exp_type<br>";
     exit(0);
 }
 
